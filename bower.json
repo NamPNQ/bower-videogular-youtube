@@ -11,6 +11,10 @@
     "videogular-plugin",
     "videogular-youtube"
   ],
+  "dependencies": {
+    "videogular": "latest",
+    "videogular-overlay-play": "latest"
+  },
   "license": "MIT",
   "homepage": "http://nampnq.vietnamcode.com"
 }
