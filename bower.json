@@ -1,0 +1,16 @@
+{
+  "name": "bower-videogular-youtube",
+  "version": "1.0",
+  "authors": [
+    "NamPNQ <nampnq@gmail.com>"
+  ],
+  "description": "Videogular youtube plugin",
+  "main": "youtube.js",
+  "keywords": [
+    "videogular",
+    "videogular-plugin",
+    "videogular-youtube"
+  ],
+  "license": "MIT",
+  "homepage": "http://nampnq.vietnamcode.com"
+}
