@@ -50,10 +50,10 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                         }
                         scope.onVideoReady = function() {
                             var videogularElementScope = API.elementScope.scope().$$childHead,
-                                vgOverPlayElementScope = angular.element('vg-overlay-play>div', API.videogularElement).scope();
+                                vgOverPlayElementScope = angular.element(document.querySelector('vg-overlay-play>div'), API.videogularElement).scope();
                             vgOverPlayElementScope.currentIcon = vgOverPlayElementScope.playIcon;
                             API.videoElement.remove();
-                            API.videoElement = angular.element("#youtube_player_" + scope.vgYoutubePlayerId);
+                            API.videoElement = angular.element(document.querySelector("#youtube_player_" + scope.vgYoutubePlayerId));
                             //Overwrite method onPlayerReady in videogularElementScope
                             videogularElementScope.onPlayerReady = function() {
                                 videogularElementScope.doPlayerReady();
@@ -106,7 +106,7 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                         }
                         scope.loadYoutube = function() {
                             var videogularElementScope = API.elementScope.scope().$$childHead,
-                                vgOverPlayElementScope = angular.element('vg-overlay-play>div', API.videogularElement).scope();
+                                vgOverPlayElementScope = angular.element(document.querySelector('vg-overlay-play>div'), API.videogularElement).scope();
                             vgOverPlayElementScope.currentIcon = "";
                             scope.ytplayer = new YT.Player('youtube_player_' + scope.vgYoutubePlayerId, {
                                 height: API.getSize().height,
