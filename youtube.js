@@ -59,8 +59,6 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                                 videogularElementScope.doPlayerReady();
                             };
 
-                            //Call method onVideoReady in videogularElementScope
-                            videogularElementScope.onVideoReady();
                             //Define some property, method for player
                             API.videoElement[0].__defineGetter__("currentTime", function() {
                                 return scope.ytplayer.getCurrentTime();
@@ -94,6 +92,10 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                                 API.videoElement.css('display', 'none');
                                 scope.ytplayer.pauseVideo();
                             };
+                            
+                            //Call method onVideoReady in videogularElementScope
+                            videogularElementScope.onVideoReady();
+                            
                             scope.ytplayer.setSize(API.getSize().width, API.getSize().height);
                             videogularElementScope.updateSize();
                             setInterval(function() {
