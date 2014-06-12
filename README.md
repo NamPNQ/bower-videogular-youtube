@@ -12,13 +12,11 @@ Install [Videogular](http://www.videogular.com/) `youtube` plugin with Bower:
 Inside the folder `bower_components\videogular-youtube` you should find also `html` partials that you should locate in `.\views\videogular\plugins\youtube\`.
 
 ## How to use
-Add directives, and video source to your HTML:
+Add directives:
 
 ```html
 <videogular vg-width="config.width" vg-height="config.height" vg-theme="config.theme.url" vg-autoplay="config.autoPlay" vg-stretch="config.stretch.value" vg-responsive="config.responsive">
-	<video class='videoPlayer' preload='metadata'>
-		<source type="video/youtube" src="http://www.youtube.com/watch?v=nOEw9iiopwI" />
-	</video>
+	<video vg-src="config.sources" preload='metadata'></video>
 
 	<vg-youtube></vg-youtube>
 
@@ -43,6 +41,19 @@ Add directives, and video source to your HTML:
 	</vg-controls>
 </videogular>
 ```
+
+Add video source, like this
+
+```js
+$scope.config = {
+			...
+			sources: [
+				{src: $sce.trustAsResourceUrl("https://www.youtube.com/watch?v=DgzBz3ibnBA"), type: "video/youtube"},
+			],
+			...
+		}
+```
+
 
 Additionally, you will need to add youtube plugins and videogular to your application:
 

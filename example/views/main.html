@@ -1,0 +1,101 @@
+<div class="container">
+	<div>
+		<videogular
+			vg-player-ready="onPlayerReady" vg-complete="onCompleteVideo" vg-update-time="onUpdateTime" vg-update-size="onUpdateSize" vg-update-volume="onUpdateVolume" vg-update-state="onUpdateState"
+			vg-width="config.width" vg-height="config.height" vg-theme="config.theme.url" vg-autoplay="config.autoPlay" vg-stretch="config.stretch.value" vg-responsive="true">
+			<video vg-src="config.sources" preload='metadata'></video>
+			<vg-youtube></vg-youtube>
+			<vg-poster-image vg-url='config.plugins.poster.url' vg-stretch="config.stretch.value"></vg-poster-image>
+			<vg-buffering></vg-buffering>
+			<vg-overlay-play vg-play-icon="config.theme.playIcon"></vg-overlay-play>
+
+			<vg-controls vg-autohide="config.autoHide" vg-autohide-time="config.autoHideTime" style="height: 50px;">
+				<vg-play-pause-button></vg-play-pause-button>
+				<vg-timeDisplay>{{ currentTime }}</vg-timeDisplay>
+				<vg-scrubBar>
+					<vg-scrubbarcurrenttime></vg-scrubbarcurrenttime>
+				</vg-scrubBar>
+				<vg-timeDisplay>{{ totalTime }}</vg-timeDisplay>
+				<vg-volume>
+					<vg-mutebutton></vg-mutebutton>
+					<vg-volumebar></vg-volumebar>
+				</vg-volume>
+				<vg-fullscreenButton vg-enter-full-screen-icon="config.theme.enterFullScreenIcon" vg-exit-full-screen-icon="config.theme.exitFullScreenIcon"></vg-fullscreenButton>
+			</vg-controls>
+		</videogular>
+	</div>
+
+	<div id="companionAd"></div>
+
+	<div class="row">
+		<div class="col-12"><h2>Properties</h2></div>
+	</div>
+
+	<div class="row">
+		<div class="col-6 col-sm-4 col-lg-4">
+			<div>
+				<label for="widthInput">Width:</label>
+				<input id="widthInput" type="text" class="form-control" ng-model="config.width">
+			</div>
+			<div>
+				<label for="heightInput">Height:</label>
+				<input id="heightInput" type="text" class="form-control" ng-model="config.height">
+			</div>
+		</div>
+
+		<div class="col-6 col-sm-4 col-lg-4">
+			<div>
+				<label for="posterInput">Poster url image (png/jpg/gif):</label>
+				<input id="posterInput" type="text" class="form-control" ng-model="config.plugins.poster.url">
+			</div>
+			<div>
+				<label for="stretchSelect">Stretch Mode:</label>
+				<select id="stretchSelect" class="form-control" ng-model="config.stretch" ng-options="stretchItem.label for stretchItem in stretchModes"></select>
+			</div>
+		</div>
+
+		<div class="col-6 col-sm-4 col-lg-4">
+			<div>
+				<label class="checkbox">
+					<input id="responsiveInput" type="checkbox" ng-model="config.responsive">Responsive
+				</label>
+			</div>
+			<div>
+				<label class="checkbox">
+					<input id="autoPlayInput" type="checkbox" ng-model="config.autoPlay">Autoplay
+				</label>
+			</div>
+			<div>
+				<label class="checkbox">
+					<input id="autoHideInput" type="checkbox" ng-model="config.autoHide">Autohide
+				</label>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-6 col-sm-4 col-lg-4">
+			<div>Theme: {{config.theme.url}}</div>
+			<div>Width: {{config.width}}</div>
+			<div>Height: {{config.height}}</div>
+			<div>Poster image: {{config.plugins.poster.url}}</div>
+			<div>Stretch: {{config.stretch}}</div>
+			<div>AutoPlay: {{config.autoPlay}}</div>
+		</div>
+		<div class="col-6 col-sm-4 col-lg-4">
+			<div>AutoHide: {{config.autoHide}}</div>
+			<div>Responsive: {{config.responsive}}</div>
+			<div>State: {{state}}</div>
+			<div>Time: {{currentTime}} / {{totalTime || 0}}</div>
+			<div>Volume: {{volume}}</div>
+			<div>Completed: {{isCompleted}}</div>
+		</div>
+		<div class="col-6 col-sm-4 col-lg-4">
+			<button ng-click="API.play()">Play</button>
+			<button ng-click="API.pause()">Pause</button>
+			<button ng-click="API.stop()">Stop</button>
+			<button ng-click="API.seekTime(0.2)">Move to second 30</button>
+			<button ng-click="changeSource()">Change source</button>
+		</div>
+	</div>
+</div>
