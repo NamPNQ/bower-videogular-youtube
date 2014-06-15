@@ -153,16 +153,20 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                         function onEvent(target, params) {
                             switch (target.name) {
                                 case VG_EVENTS.ON_PLAY:
-                                    ytplayer.playVideo();
+                                    if(ytplayer)
+                                        ytplayer.playVideo();
                                     break;
                                 case VG_EVENTS.ON_PAUSE:
-                                    ytplayer.pauseVideo();
+                                    if(ytplayer)
+                                        ytplayer.pauseVideo();
                                     break;
                                 case VG_EVENTS.ON_SEEK_TIME:
-                                    ytplayer.seekTo(params[0] * ytplayer.getDuration(), true);
+                                    if(ytplayer)
+                                        ytplayer.seekTo(params[0] * ytplayer.getDuration(), true);
                                     break;
                                 case VG_EVENTS.ON_SET_VOLUME:
-                                    ytplayer.setVolume(params[0] * 100.0)
+                                    if(ytplayer)
+                                        ytplayer.setVolume(params[0] * 100.0)
                                     break;
                                 case VG_EVENTS.ON_UPDATE_SIZE:
                                     if(ytplayer)
