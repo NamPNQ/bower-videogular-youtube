@@ -15,32 +15,30 @@ Inside the folder `bower_components\videogular-youtube` you should find also `ht
 Add directives, and video source to your HTML:
 
 ```html
-<videogular vg-width="config.width" vg-height="config.height" vg-theme="config.theme.url" vg-autoplay="config.autoPlay" vg-stretch="config.stretch.value" vg-responsive="config.responsive">
-	<video class='videoPlayer' preload='metadata'>
-		<source type="video/youtube" src="http://www.youtube.com/watch?v=nOEw9iiopwI" />
-	</video>
+<videogular vg-player-ready="onPlayerReady" vg-theme="config.theme.url" vg-autoplay="config.autoPlay">
+                    <vg-video vg-src="config.sources" vg-youtube></vg-video>
 
-	<vg-youtube></vg-youtube>
+                    <vg-controls vg-autohide="config.autoHide" vg-autohide-time="config.autoHideTime">
+                        <vg-play-pause-button></vg-play-pause-button>
+                        <vg-timedisplay>{{ currentTime | date:'mm:ss' }}</vg-timedisplay>
+                        <vg-scrubBar>
+                            <vg-scrubbarcurrenttime></vg-scrubbarcurrenttime>
+                        </vg-scrubBar>
+                        <vg-timedisplay>{{ timeLeft | date:'mm:ss' }}</vg-timedisplay>
+                        <vg-volume>
+                            <vg-mutebutton></vg-mutebutton>
+                            <vg-volumebar></vg-volumebar>
+                        </vg-volume>
+                        <vg-fullscreenButton></vg-fullscreenButton>
+                    </vg-controls>
 
-	<vg-controls vg-autohide="config.autoHide" style="height: 50px;">
-		<vg-play-pause-button vg-play-icon="config.theme.playIcon" vg-pause-icon="config.theme.pauseIcon"></vg-play-pause-button>
-		<vg-timeDisplay>{{ currentTime }}</vg-timeDisplay>
-		<vg-scrubBar>
-			<vg-scrubbarcurrenttime></vg-scrubbarcurrenttime>
-		</vg-scrubBar>
-		<vg-timeDisplay>{{ totalTime }}</vg-timeDisplay>
-		<vg-volume>
-			<vg-mutebutton
-				vg-volume-level-3-icon="config.theme.volumeLevel3Icon"
-				vg-volume-level-2-icon="config.theme.volumeLevel2Icon"
-				vg-volume-level-1-icon="config.theme.volumeLevel1Icon"
-				vg-volume-level-0-icon="config.theme.volumeLevel0Icon"
-				vg-mute-icon="config.theme.muteIcon">
-			</vg-mutebutton>
-			<vg-volumebar></vg-volumebar>
-		</vg-volume>
-		<vg-fullscreenButton vg-enter-full-screen-icon="config.theme.enterFullScreenIcon" vg-exit-full-screen-icon="config.theme.exitFullScreenIcon"></vg-fullscreenButton>
-	</vg-controls>
+                    <vg-poster-image vg-url='config.plugins.poster.url'></vg-poster-image>
+                    <vg-buffering></vg-buffering>
+                    <vg-overlay-play vg-play-icon="config.theme.playIcon"></vg-overlay-play>
+
+                    <vg-poster-image vg-url='config.plugins.poster.url'></vg-poster-image>
+                    <vg-buffering></vg-buffering>
+                    <vg-overlay-play vg-play-icon="config.theme.playIcon"></vg-overlay-play>
 </videogular>
 ```
 
@@ -62,6 +60,13 @@ angular.module("videogularApp",
 ```
 
 And that's all :)
+
+### Donate
+
+If project help you, you can donate me
+
+* Paypal: chienthan1612@gmail.com
+* Bitcoin: 1LKyH1jTP8Agd8FakpvydCP87HQzL85cFx
 
 ### Install Videogular
 
@@ -93,7 +98,7 @@ It's available on [Videogular's project Wiki](https://github.com/2fdevs/videogul
 
 The MIT License (MIT)
 
-Copyright (c) 2013 NamPNQ
+Copyright (c) 2014 NamPNQ
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in

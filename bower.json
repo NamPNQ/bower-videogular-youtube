@@ -1,6 +1,6 @@
 {
   "name": "bower-videogular-youtube",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "authors": [
     "NamPNQ <nampnq@gmail.com>"
   ],
@@ -16,5 +16,5 @@
     "videogular-overlay-play": "latest"
   },
   "license": "MIT",
-  "homepage": "http://nampnq.vietnamcode.com"
+  "homepage": "http://nampnq.vietnamcode.info"
 }
