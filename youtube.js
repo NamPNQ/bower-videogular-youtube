@@ -7,7 +7,6 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                 $rootScope.$apply(function() {
                     $rootScope.youtubeApiReady = true;
                 });
-
             };
             console.log("Init youtube api");
             var tag = document.createElement('script');
@@ -23,11 +22,26 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                     restrict: "A",
                     require: "^videogular",
                     link: function(scope, elem, attr, API) {
-                        var ytplayer, updateTimer;
+                        var ytplayer, updateTimer, optionsArr, options;
 
                         var youtubeReg = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+                        optionsArr = attr.vgYoutube !== null ? attr.vgYoutube.split(";") : null;
+                        options = {
+                            controls: 0,
+                            showinfo: 0,
+                            rel: 0
+                        };
 
-                        function getYoutubeId(url){
+                        if (options !== null) {
+                            options.forEach(function (item) {
+                                var keyValuePair = item.split("=");
+                                if (playerVars.hasOwnProperty(keyValuePair[0])) {
+                                  playerVars[keyValuePair[0]] = keyValuePair[1] || 0;
+                                }
+                            });
+                        }
+
+                        function getYoutubeId(url) {
                             return url.match(youtubeReg)[2];
                         }
 
@@ -42,16 +56,13 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                                         console.log("Api loaded..");
                                         ytplayer = new YT.Player(API.mediaElement[0], {
                                             videoId: getYoutubeId(url),
-                                            playerVars: {
-                                                controls: 0,
-                                                showinfo: 0
-                                            },
+                                            playerVars: options,
                                             events: {
                                                 'onReady': onVideoReady
                                             }
                                         });
                                     }
-                                })
+                                });
                             }
                         }
 
@@ -87,14 +98,14 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                             });
                             API.mediaElement[0].play = function () {
                                 ytplayer.playVideo();
-                            }
+                            };
                             API.mediaElement[0].pause = function () {
                                 ytplayer.pauseVideo();
                             };
-                            function updateTime(){
+                            function updateTime() {
                                 API.onUpdateTime({
-                                        target: API.mediaElement[0]
-                                    })
+                                    target: API.mediaElement[0]
+                                });
                             }
                             updateTimer = setInterval(updateTime, 600);
                             angular.element(ytplayer.getIframe()).css({'width':'100%','height':'100%'});
@@ -124,8 +135,7 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                         scope.$on('$destroy', function() {
                             clearInterval(updateTimer);
                         });
-
                     }
-                }
+                };
             }
         ]);
