@@ -22,18 +22,18 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                     restrict: "A",
                     require: "^videogular",
                     link: function(scope, elem, attr, API) {
-                        var ytplayer, updateTimer, optionsArr, options;
+                        var ytplayer, updateTimer, optionsArr, playerVars;
 
                         var youtubeReg = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
                         optionsArr = attr.vgYoutube !== null ? attr.vgYoutube.split(";") : null;
-                        options = {
+                        playerVars = {
                             controls: 0,
                             showinfo: 0,
                             rel: 0
                         };
 
-                        if (options !== null) {
-                            options.forEach(function (item) {
+                        if (optionsArr !== null) {
+                            optionsArr.forEach(function (item) {
                                 var keyValuePair = item.split("=");
                                 if (playerVars.hasOwnProperty(keyValuePair[0])) {
                                   playerVars[keyValuePair[0]] = keyValuePair[1] || 0;
@@ -56,7 +56,7 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                                         console.log("Api loaded..");
                                         ytplayer = new YT.Player(API.mediaElement[0], {
                                             videoId: getYoutubeId(url),
-                                            playerVars: options,
+                                            playerVars: playerVars,
                                             events: {
                                                 'onReady': onVideoReady
                                             }
