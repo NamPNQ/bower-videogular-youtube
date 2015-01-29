@@ -16,8 +16,8 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
         }
     ])
     .directive(
-        "vgYoutube", ["$rootScope", "$window", "$timeout", "$interval",
-            function($rootScope, $window, $timeout, $interval) {
+        "vgYoutube", ["$rootScope", "$window", "$timeout", "$interval", "$sce"
+            function($rootScope, $window, $timeout, $interval, $sce) {
                 return {
                     restrict: "A",
                     require: "^videogular",
@@ -129,7 +129,11 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                                 return API.sources;
                             },
                             function(newVal, oldVal) {
-                                onSourceChange(newVal[0].src);
+                                if ('string' === typeof newVal[0].src){ 
+                                    onSourceChange(newVal[0].src); 
+                                } else {
+                                    onSourceChange($sce.getTrustedResourceUrl(newVal[0].src));
+                                }
                             }
                         );
                         scope.$on('$destroy', function() {
