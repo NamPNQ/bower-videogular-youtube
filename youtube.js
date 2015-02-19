@@ -58,7 +58,8 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                                             videoId: getYoutubeId(url),
                                             playerVars: playerVars,
                                             events: {
-                                                'onReady': onVideoReady
+                                                'onReady': onVideoReady,
+                                                'onStateChange': onPlayerStateChange
                                             }
                                         });
                                     }
@@ -68,6 +69,12 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
 
                         function destroyYoutubePlayer() {
                             ytplayer.destroy();
+                        }
+
+                        function onPlayerStateChange(event) {
+                            if (event.data == YT.PlayerState.ENDED) {
+                                API.onComplete();
+                            }
                         }
 
                         function onVideoReady() {
