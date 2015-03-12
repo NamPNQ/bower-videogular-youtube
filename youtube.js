@@ -16,8 +16,8 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
         }
     ])
     .directive(
-        "vgYoutube", ["$rootScope", "$window", "$timeout", "$interval",
-            function($rootScope, $window, $timeout, $interval) {
+        "vgYoutube", ["$rootScope", "$window", "$timeout", "$interval", "VG_STATES",
+            function($rootScope, $window, $timeout, $interval, VG_STATES) {
                 return {
                     restrict: "A",
                     require: "^videogular",
@@ -58,7 +58,8 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                                             videoId: getYoutubeId(url),
                                             playerVars: playerVars,
                                             events: {
-                                                'onReady': onVideoReady
+                                                'onReady': onVideoReady,
+                                                'onStateChange': onVideoStateChange
                                             }
                                         });
                                     }
@@ -109,6 +110,32 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                             }
                             updateTimer = setInterval(updateTime, 600);
                             angular.element(ytplayer.getIframe()).css({'width':'100%','height':'100%'});
+                        }
+
+                        function onVideoStateChange(event) {
+                            var player = event.target;
+
+                            switch (event.data) {
+                                case YT.PlayerState.ENDED:
+                                    API.onComplete();
+                                break;
+
+                                case YT.PlayerState.PLAYING:
+                                    API.setState(VG_STATES.PLAY);
+                                break;
+
+                                case YT.PlayerState.PAUSED:
+                                    API.setState(VG_STATES.PAUSE);
+                                break;
+
+                                case YT.PlayerState.BUFFERING:
+                                    //No appropriate state
+                                break;
+
+                                case YT.PlayerState.CUED:
+                                    //No appropriate state
+                                break;
+                            }
                         }
 
                         function isYoutube(url) {
