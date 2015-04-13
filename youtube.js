@@ -27,9 +27,11 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                         var youtubeReg = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
                         optionsArr = attr.vgYoutube !== null ? attr.vgYoutube.split(";") : null;
                         playerVars = {
-                            controls: 0,
-                            showinfo: 0,
-                            rel: 0
+                            'controls': 0,
+                            'showinfo': 0,
+                            'rel': 0,
+                            'autoplay': 0
+                            //Switch autoplay to 1 to autoplay videos
                         };
 
                         if (optionsArr !== null) {
