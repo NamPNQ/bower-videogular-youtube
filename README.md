@@ -16,7 +16,7 @@ Add directives, and video source to your HTML:
 
 ```html
 <videogular vg-player-ready="onPlayerReady" vg-theme="config.theme.url" vg-autoplay="config.autoPlay">
-                    <vg-video vg-src="config.sources" vg-youtube="rel=1;showinfo=1"></vg-video>
+                    <vg-media vg-src="config.sources" vg-youtube="rel=1;showinfo=1"></vg-media>
 
                     <vg-controls vg-autohide="config.autoHide" vg-autohide-time="config.autoHideTime">
                         <vg-play-pause-button></vg-play-pause-button>
