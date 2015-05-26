@@ -8,7 +8,6 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                     $rootScope.youtubeApiReady = true;
                 });
             };
-            console.log("Init youtube api");
             var tag = document.createElement('script');
             tag.src = "https://www.youtube.com/iframe_api";
             var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -55,7 +54,6 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                             } else {
                                 $rootScope.$watch('youtubeApiReady', function(value) {
                                     if (value) {
-                                        console.log("Api loaded..");
                                         ytplayer = new YT.Player(API.mediaElement[0], {
                                             videoId: getYoutubeId(url),
                                             playerVars: playerVars,
