@@ -1,4 +1,4 @@
-Bower-videogular-youtube [Outdated]
+Bower-videogular-youtube
 ========================
 
 Videogular `youtube` plugin repository for distribution on `bower`
