@@ -29,8 +29,8 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                             'controls': 0,
                             'showinfo': 0,
                             'rel': 0,
-                            'autoplay': 0
-                            //Switch autoplay to 1 to autoplay videos
+                            'autoplay': 0, //Switch autoplay to 1 to autoplay videos
+                            'start': 0
                         };
 
                         if (optionsArr !== null) {
