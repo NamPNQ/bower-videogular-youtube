@@ -61,6 +61,12 @@ angular.module("videogularApp",
 
 And that's all :)
 
+### A note on mobile fullscreen support
+
+The YouTube iframe API does not provide a programmatic way to make a video fullscreen. If the Videogular full screen button is enabled for YouTube videos, it will not work.
+
+While good results may be obtained by making the `iframe` or `videogular` element fullscreen on Android, this currently is not supported on iOS which can only make `video` elements fullscreen. The only way to support fullscreen YouTube videos on iPad is to show the YouTube controls and allow the user to tap the fullscreen button. If YouTube controls are enabled, ensure that any videogular elements that would cover the iframe, such as `vg-controls`, `vg-overlay-play`, and `vg-poster` are disabled so that the user can interact with the controls inside the YouTube iframe.
+
 ### Donate
 
 If project help you, you can donate me
