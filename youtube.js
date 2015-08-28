@@ -139,7 +139,10 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                         }
 
                         function isYoutube(url) {
-                            return url.match(youtubeReg);
+                            if (url) {
+                                return url.match(youtubeReg);
+                            }
+                            return false;
                         }
 
                         function onSourceChange(url) {
@@ -156,7 +159,12 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                                 return API.sources;
                             },
                             function(newVal, oldVal) {
-                                onSourceChange(newVal[0].src);
+                                if (newVal && newVal.length > 0 && newVal[0].src) {
+                                    onSourceChange(newVal[0].src.toString());
+                                }
+                                else {
+                                    onSourceChange(null);
+                                }
                             }
                         );
                         scope.$on('$destroy', function() {
