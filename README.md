@@ -61,6 +61,12 @@ angular.module("videogularApp",
 
 And that's all :)
 
+### Demo
+
+Here you can see a demo on Codepen:
+
+http://codepen.io/2fdevs/pen/qOBRpO
+
 ### A note on mobile fullscreen support
 
 The YouTube iframe API does not provide a programmatic way to make a video fullscreen. If the Videogular full screen button is enabled for YouTube videos, it will not work.
