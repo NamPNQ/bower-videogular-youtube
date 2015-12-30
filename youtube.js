@@ -48,7 +48,7 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
 
                         function initYoutubePlayer(url) {
                             if (ytplayer) {
-                                ytplayer.loadVideoById({
+                                ytplayer.cueVideoById({
                                     videoId: getYoutubeId(url)
                                   });
                             } else {
