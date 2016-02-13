@@ -121,15 +121,24 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                                 break;
 
                                 case YT.PlayerState.PLAYING:
+                                    // Trigger onStartPlaying event
+                                    var event = new CustomEvent("playing");
+                                    API.mediaElement[0].dispatchEvent(event);
                                     API.setState(VG_STATES.PLAY);
                                 break;
 
                                 case YT.PlayerState.PAUSED:
-                                    API.setState(VG_STATES.PAUSE);
+                                    // NB Videogular calls pause() on the YouTube player to actually stop a video.
+                                    // Avoid jumping from the desired "stop" status to "pause" status:
+                                    if (API.currentState == VG_STATES.PLAY) {
+                                        API.setState(VG_STATES.PAUSE);
+                                    }
                                 break;
 
                                 case YT.PlayerState.BUFFERING:
-                                    //No appropriate state
+                                    // Trigger onStartBuffering event
+                                    var event = new CustomEvent("waiting");
+                                    API.mediaElement[0].dispatchEvent(event);
                                 break;
 
                                 case YT.PlayerState.CUED:
