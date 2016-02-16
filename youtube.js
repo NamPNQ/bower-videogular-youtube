@@ -110,6 +110,10 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                             }
                             updateTimer = setInterval(updateTime, 600);
                             angular.element(ytplayer.getIframe()).css({'width':'100%','height':'100%'});
+                            
+                            // Trigger canplay event
+                            var event = new CustomEvent("canplay");
+                            API.mediaElement[0].dispatchEvent(event);
                         }
 
                         function onVideoStateChange(event) {
