@@ -110,6 +110,9 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                             }
                             updateTimer = setInterval(updateTime, 600);
                             angular.element(ytplayer.getIframe()).css({'width':'100%','height':'100%'});
+                            
+                            $rootScope.$broadcast('ytVideoReady', true);
+
                         }
 
                         function onVideoStateChange(event) {
@@ -145,6 +148,8 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                                     //No appropriate state
                                 break;
                             }
+                            
+                            $rootScope.$broadcast('ytVideoStateChange', event.data);
                         }
 
                         function isYoutube(url) {
