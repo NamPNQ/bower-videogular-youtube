@@ -118,6 +118,9 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                         }
 
                         function startUpdateTimer(interval) {
+                            if (updateTimer) {
+                                stopUpdateTimer();
+                            }
                             updateTimer = setInterval(updateTime, interval);
                         }
 
