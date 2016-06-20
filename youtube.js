@@ -30,7 +30,8 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                             'showinfo': 0,
                             'rel': 0,
                             'autoplay': 0, //Switch autoplay to 1 to autoplay videos
-                            'start': 0
+                            'start': 0,
+                            'iv_load_policy': 1
                         };
 
                         if (optionsArr !== null) {
@@ -96,6 +97,12 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                             });
                             API.mediaElement[0].__defineSetter__("volume", function (volume) {
                                 return ytplayer.setVolume(volume * 100.0);
+                            });
+                            API.mediaElement[0].__defineGetter__("playbackRate", function () {
+                                return ytplayer.getPlaybackRate();
+                            });
+                            API.mediaElement[0].__defineSetter__("playbackRate", function (rate) {
+                                return ytplayer.setPlaybackRate(rate);
                             });
                             API.mediaElement[0].play = function () {
                                 ytplayer.playVideo();
