@@ -104,6 +104,9 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                             API.mediaElement[0].__defineSetter__("playbackRate", function (rate) {
                                 return ytplayer.setPlaybackRate(rate);
                             });
+                            API.mediaElement[0].__defineGetter__("loadedFraction", function () {
+                                return ytplayer.getVideoLoadedFraction();
+                            });
                             API.mediaElement[0].play = function () {
                                 ytplayer.playVideo();
                             };
