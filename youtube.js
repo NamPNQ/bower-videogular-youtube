@@ -21,7 +21,7 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                     restrict: "A",
                     require: "^videogular",
                     link: function(scope, elem, attr, API) {
-                        var ytplayer, updateTimer, optionsArr, playerVars;
+                        var ytplayer, updateTimer, optionsArr, playerVars, autoplayOnMobile;
 
                         var youtubeReg = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
                         optionsArr = attr.vgYoutube !== null ? attr.vgYoutube.split(";") : null;
@@ -31,7 +31,9 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                             'rel': 0,
                             'autoplay': 0, //Switch autoplay to 1 to autoplay videos
                             'start': 0,
-                            'iv_load_policy': 1
+                            'iv_load_policy': 1,
+                            'playsinline': 0,
+                            'autoplayOnMobile': 0
                         };
 
                         if (optionsArr !== null) {
@@ -39,6 +41,11 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                                 var keyValuePair = item.split("=");
                                 if (playerVars.hasOwnProperty(keyValuePair[0])) {
                                   playerVars[keyValuePair[0]] = keyValuePair[1] || 0;
+                                  if (keyValuePair[0] == 'autoplayOnMobile'){
+                                      if (keyValuePair[1] == 1){
+                                          autoplayOnMobile = true
+                                      }
+                                  }
                                 }
                             });
                         }
@@ -112,6 +119,13 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                             };
                             updateTime(); // Initial time update
                             angular.element(ytplayer.getIframe()).css({'width':'100%','height':'100%'});
+
+                            if (autoplayOnMobile === true){
+                                angular.element(ytplayer.getIframe()).attr({'autoplay':''});
+                                angular.element(ytplayer.getIframe()).attr({'playsinline':''});
+                                angular.element(ytplayer.getIframe()).attr({'muted':''});
+                                ytplayer.mute();ytplayer.setVolume(0);ytplayer.playVideo();
+                            }
 
                             // Trigger canplay event
                             var event = new CustomEvent("canplay");
