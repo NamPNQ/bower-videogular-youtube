@@ -60,7 +60,8 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                                             playerVars: playerVars,
                                             events: {
                                                 'onReady': onVideoReady,
-                                                'onStateChange': onVideoStateChange
+                                                'onStateChange': onVideoStateChange,
+                                                'onError': onVideoError
                                             }
                                         });
                                     }
@@ -185,6 +186,10 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                                     //No appropriate state
                                 break;
                             }
+                        }
+
+                        function onVideoError(event) {
+                            API.onVideoError(event);
                         }
 
                         function isYoutube(url) {
