@@ -83,16 +83,7 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                                 return ytplayer.getCurrentTime();
                             });
                             API.mediaElement[0].__defineSetter__("currentTime", function (seconds) {
-                                if(API.currentState == VG_STATES.STOP) {
-                                    // When video is currently stopped state, seekTo() starts playback by default.
-                                    // We want seeking to be consistent though and never start playback on
-                                    // its own but remain in paused state.
-                                    ytplayer.seekTo(seconds, true);
-                                    ytplayer.pauseVideo();
-                                } else {
-                                    ytplayer.seekTo(seconds, true);
-                                }
-                                return;
+                                return ytplayer.seekTo(seconds, true);
                             });
                             API.mediaElement[0].__defineGetter__("duration", function () {
                                 return ytplayer.getDuration();
