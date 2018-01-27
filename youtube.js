@@ -75,6 +75,10 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
 
                         function onVideoReady() {
                             //Define some property, method for player
+                            // FLOWRA
+                            API.mediaElement[0].__defineGetter__("currentState", function () {
+                                return ytplayer.getPlayerState();
+                            });
                             API.mediaElement[0].__defineGetter__("currentTime", function () {
                                 return ytplayer.getCurrentTime();
                             });
