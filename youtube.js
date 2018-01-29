@@ -31,7 +31,10 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                             'rel': 0,
                             'autoplay': 0, //Switch autoplay to 1 to autoplay videos
                             'start': 0,
-                            'iv_load_policy': 1
+                            'iv_load_policy': 1,
+                            // Play video inline instead of fullscreen on iOS
+                            'playsinline': 1,
+                            'modestbranding': 1
                         };
 
                         if (optionsArr !== null) {
