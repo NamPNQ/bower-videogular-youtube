@@ -87,6 +87,13 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                                 return ytplayer.getVolume() / 100.0;
                             });
                             API.mediaElement[0].__defineSetter__("volume", function (volume) {
+                                // Videogular doesn't have mute/unmute support
+                                // but this allows us to start youtube muted with
+                                // mute=1 play ver but still allows videogular
+                                // to set the volume properly
+                                if (volume > 0 && ytplayer.isMuted()) {
+                                  ytplayer.unMute();
+                                }
                                 return ytplayer.setVolume(volume * 100.0);
                             });
                             API.mediaElement[0].__defineGetter__("playbackRate", function () {
