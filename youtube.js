@@ -40,9 +40,11 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
 
                         function initYoutubePlayer(url) {
                             if (ytplayer) {
-                                ytplayer.cueVideoById({
-                                    videoId: getYoutubeId(url)
-                                  });
+                                if (ytplayer.cueVideoById) {
+                                    ytplayer.cueVideoById({
+                                        videoId: getYoutubeId(url)
+                                      });
+                                }
                             } else {
                                 $rootScope.$watch('youtubeApiReady', function(value) {
                                     if (value) {
@@ -93,6 +95,9 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                                 // to set the volume properly
                                 if (volume > 0 && ytplayer.isMuted()) {
                                   ytplayer.unMute();
+                                }
+                                if (volume == 0 && !ytplayer.isMuted()) {
+                                  ytplayer.mute();
                                 }
                                 return ytplayer.setVolume(volume * 100.0);
                             });
