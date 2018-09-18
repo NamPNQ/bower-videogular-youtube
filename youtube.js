@@ -25,21 +25,12 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
 
                         var youtubeReg = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
                         optionsArr = attr.vgYoutube !== null ? attr.vgYoutube.split(";") : null;
-                        playerVars = {
-                            'controls': 0,
-                            'showinfo': 0,
-                            'rel': 0,
-                            'autoplay': 0, //Switch autoplay to 1 to autoplay videos
-                            'start': 0,
-                            'iv_load_policy': 1
-                        };
+                        playerVars = {};
 
                         if (optionsArr !== null) {
                             optionsArr.forEach(function (item) {
                                 var keyValuePair = item.split("=");
-                                if (playerVars.hasOwnProperty(keyValuePair[0])) {
-                                  playerVars[keyValuePair[0]] = keyValuePair[1] || 0;
-                                }
+                                playerVars[keyValuePair[0]] = keyValuePair[1] || 0;
                             });
                         }
 
@@ -49,9 +40,11 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
 
                         function initYoutubePlayer(url) {
                             if (ytplayer) {
-                                ytplayer.cueVideoById({
-                                    videoId: getYoutubeId(url)
-                                  });
+                                if (ytplayer.cueVideoById) {
+                                    ytplayer.cueVideoById({
+                                        videoId: getYoutubeId(url)
+                                      });
+                                }
                             } else {
                                 $rootScope.$watch('youtubeApiReady', function(value) {
                                     if (value) {
@@ -96,6 +89,16 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                                 return ytplayer.getVolume() / 100.0;
                             });
                             API.mediaElement[0].__defineSetter__("volume", function (volume) {
+                                // Videogular doesn't have mute/unmute support
+                                // but this allows us to start youtube muted with
+                                // mute=1 play ver but still allows videogular
+                                // to set the volume properly
+                                if (volume > 0 && ytplayer.isMuted()) {
+                                  ytplayer.unMute();
+                                }
+                                if (volume == 0 && !ytplayer.isMuted()) {
+                                  ytplayer.mute();
+                                }
                                 return ytplayer.setVolume(volume * 100.0);
                             });
                             API.mediaElement[0].__defineGetter__("playbackRate", function () {
