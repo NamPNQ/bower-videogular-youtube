@@ -2,16 +2,21 @@
 angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
     .run(['$rootScope', '$window',
         function($rootScope, $window) {
-            $rootScope.youtubeApiReady = false;
-            $window.onYouTubeIframeAPIReady = function() {
-                $rootScope.$apply(function() {
-                    $rootScope.youtubeApiReady = true;
-                });
-            };
-            var tag = document.createElement('script');
-            tag.src = "https://www.youtube.com/iframe_api";
-            var firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            // Load YouTube API only if required
+            if (typeof YT == 'undefined') {
+                $rootScope.youtubeApiReady = false;
+                $window.onYouTubeIframeAPIReady = function() {
+                    $rootScope.$apply(function() {
+                        $rootScope.youtubeApiReady = true;
+                    });
+                };
+                var tag = document.createElement('script');
+                tag.src = "https://www.youtube.com/iframe_api";
+                var firstScriptTag = document.getElementsByTagName('script')[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            } else {
+                $rootScope.youtubeApiReady = true;
+            }
         }
     ])
     .directive(
