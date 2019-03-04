@@ -120,6 +120,14 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                             API.mediaElement[0].__defineGetter__("loadedFraction", function () {
                                 return ytplayer.getVideoLoadedFraction();
                             });
+                            // FLOWRA
+                            API.mediaElement[0].__defineGetter__("videoId", function () {
+                                return getYoutubeId(ytplayer.getVideoUrl());
+                            });
+                            // FLOWRA
+                            API.mediaElement[0].__defineSetter__("videoId", function (videoId) {
+                                return ytplayer.loadVideoById(videoId);
+                            });
                             API.mediaElement[0].play = function () {
                                 ytplayer.playVideo();
                             };
