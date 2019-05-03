@@ -197,7 +197,8 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                                 break;
 
                                 case YT.PlayerState.CUED:
-                                    //No appropriate state
+                                    var event = new CustomEvent("positioned");
+                                    API.mediaElement[0].dispatchEvent(event);
                                 break;
                             }
                         }
