@@ -52,7 +52,7 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                         }
 
                         function getYoutubeId(url) {
-                            return url.match(youtubeReg)[2];
+                            return url && url.match(youtubeReg)[2] || null;
                         }
 
                         function initYoutubePlayer(url) {
@@ -125,8 +125,11 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                                 return getYoutubeId(ytplayer.getVideoUrl());
                             });
                             // FLOWRA
-                            API.mediaElement[0].__defineSetter__("videoId", function (videoId) {
-                                return ytplayer.loadVideoById(videoId);
+                            API.mediaElement[0].__defineSetter__("videoId", function (params) {
+                                // Will position the given video at the optionally
+                                // given startSeconds, but don't play it (important).
+                                // params e.g. { videoId: XYZ, startSeconds: 13.5 }
+                                return ytplayer.cueVideoById(params);
                             });
                             API.mediaElement[0].play = function () {
                                 ytplayer.playVideo();
