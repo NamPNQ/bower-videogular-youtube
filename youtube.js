@@ -137,6 +137,14 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                             API.mediaElement[0].pause = function () {
                                 ytplayer.pauseVideo();
                             };
+                            // FLOWRA
+                            API.mediaElement[0].mute = function () {
+                                ytplayer.mute();
+                            };
+                            // FLOWRA
+                            API.mediaElement[0].unmute = function () {
+                                ytplayer.unmute();
+                            };
                             updateTime(); // Initial time update
                             angular.element(ytplayer.getIframe()).css({'width':'100%','height':'100%'});
 
