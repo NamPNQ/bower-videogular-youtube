@@ -100,10 +100,10 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                                 return ytplayer.getPlayerState() != YT.PlayerState.PLAYING;
                             });
                             API.mediaElement[0].__defineGetter__("videoWidth", function () {
-                                return ytplayer.a.width;
+                                return ytplayer.a && ytplayer.a.width || 0;
                             });
                             API.mediaElement[0].__defineGetter__("videoHeight", function () {
-                                return ytplayer.a.height;
+                                return ytplayer.a && ytplayer.a.height || 0;
                             });
                             API.mediaElement[0].__defineGetter__("volume", function () {
                                 return ytplayer.getVolume() / 100.0;
