@@ -143,7 +143,11 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                             };
                             // FLOWRA
                             API.mediaElement[0].unmute = function () {
-                                ytplayer.unmute();
+                                ytplayer.unMute();
+                            };
+                            // FLOWRA
+                            API.mediaElement[0].isMuted = function () {
+                                ytplayer.isMuted();
                             };
                             updateTime(); // Initial time update
                             angular.element(ytplayer.getIframe()).css({'width':'100%','height':'100%'});
