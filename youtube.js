@@ -2,16 +2,21 @@
 angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
     .run(['$rootScope', '$window',
         function($rootScope, $window) {
-            $rootScope.youtubeApiReady = false;
-            $window.onYouTubeIframeAPIReady = function() {
-                $rootScope.$apply(function() {
-                    $rootScope.youtubeApiReady = true;
-                });
-            };
-            var tag = document.createElement('script');
-            tag.src = "https://www.youtube.com/iframe_api";
-            var firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            // Load YouTube API only if required
+            if (typeof YT == 'undefined') {
+                $rootScope.youtubeApiReady = false;
+                $window.onYouTubeIframeAPIReady = function() {
+                    $rootScope.$apply(function() {
+                        $rootScope.youtubeApiReady = true;
+                    });
+                };
+                var tag = document.createElement('script');
+                tag.src = "https://www.youtube.com/iframe_api";
+                var firstScriptTag = document.getElementsByTagName('script')[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            } else {
+                $rootScope.youtubeApiReady = true;
+            }
         }
     ])
     .directive(
@@ -31,7 +36,10 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                             'rel': 0,
                             'autoplay': 0, //Switch autoplay to 1 to autoplay videos
                             'start': 0,
-                            'iv_load_policy': 1
+                            'iv_load_policy': 1,
+                            // Play video inline instead of fullscreen on iOS
+                            'playsinline': 1,
+                            'modestbranding': 1
                         };
 
                         if (optionsArr !== null) {
@@ -44,7 +52,7 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                         }
 
                         function getYoutubeId(url) {
-                            return url.match(youtubeReg)[2];
+                            return url && url.match(youtubeReg)[2] || null;
                         }
 
                         function initYoutubePlayer(url) {
@@ -60,7 +68,8 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                                             playerVars: playerVars,
                                             events: {
                                                 'onReady': onVideoReady,
-                                                'onStateChange': onVideoStateChange
+                                                'onStateChange': onVideoStateChange,
+                                                'onError': onVideoError
                                             }
                                         });
                                     }
@@ -74,6 +83,10 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
 
                         function onVideoReady() {
                             //Define some property, method for player
+                            // FLOWRA
+                            API.mediaElement[0].__defineGetter__("currentState", function () {
+                                return ytplayer.getPlayerState();
+                            });
                             API.mediaElement[0].__defineGetter__("currentTime", function () {
                                 return ytplayer.getCurrentTime();
                             });
@@ -87,10 +100,10 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                                 return ytplayer.getPlayerState() != YT.PlayerState.PLAYING;
                             });
                             API.mediaElement[0].__defineGetter__("videoWidth", function () {
-                                return ytplayer.a.width;
+                                return ytplayer.a && ytplayer.a.width || 0;
                             });
                             API.mediaElement[0].__defineGetter__("videoHeight", function () {
-                                return ytplayer.a.height;
+                                return ytplayer.a && ytplayer.a.height || 0;
                             });
                             API.mediaElement[0].__defineGetter__("volume", function () {
                                 return ytplayer.getVolume() / 100.0;
@@ -104,11 +117,37 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                             API.mediaElement[0].__defineSetter__("playbackRate", function (rate) {
                                 return ytplayer.setPlaybackRate(rate);
                             });
+                            API.mediaElement[0].__defineGetter__("loadedFraction", function () {
+                                return ytplayer.getVideoLoadedFraction();
+                            });
+                            // FLOWRA
+                            API.mediaElement[0].__defineGetter__("videoId", function () {
+                                return getYoutubeId(ytplayer.getVideoUrl());
+                            });
+                            // FLOWRA
+                            API.mediaElement[0].__defineSetter__("videoId", function (params) {
+                                // Will position the given video at the optionally
+                                // given startSeconds, but don't play it (important).
+                                // params e.g. { videoId: XYZ, startSeconds: 13.5 }
+                                return ytplayer.cueVideoById(params);
+                            });
                             API.mediaElement[0].play = function () {
                                 ytplayer.playVideo();
                             };
                             API.mediaElement[0].pause = function () {
                                 ytplayer.pauseVideo();
+                            };
+                            // FLOWRA
+                            API.mediaElement[0].mute = function () {
+                                ytplayer.mute();
+                            };
+                            // FLOWRA
+                            API.mediaElement[0].unmute = function () {
+                                ytplayer.unMute();
+                            };
+                            // FLOWRA
+                            API.mediaElement[0].isMuted = function () {
+                                ytplayer.isMuted();
                             };
                             updateTime(); // Initial time update
                             angular.element(ytplayer.getIframe()).css({'width':'100%','height':'100%'});
@@ -170,9 +209,14 @@ angular.module("info.vietnamcode.nampnq.videogular.plugins.youtube", [])
                                 break;
 
                                 case YT.PlayerState.CUED:
-                                    //No appropriate state
+                                    var event = new CustomEvent("positioned");
+                                    API.mediaElement[0].dispatchEvent(event);
                                 break;
                             }
+                        }
+
+                        function onVideoError(event) {
+                            API.onVideoError(event);
                         }
 
                         function isYoutube(url) {
